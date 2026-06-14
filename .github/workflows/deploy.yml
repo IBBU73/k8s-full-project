@@ -36,3 +36,11 @@ jobs:
 
       - name: Build Backend
         run: docker build -t backend:v1 ./backend
+
+      - name: Slack Notification
+        if: success()
+        run: |
+          curl -X POST \
+          -H 'Content-type: application/json' \
+          --data '{"text":"✅ Deployment completed successfully"}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
